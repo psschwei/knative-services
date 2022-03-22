@@ -1,0 +1,16 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: tag
+ namespace: default
+spec:
+ template:
+  metadata:
+    annotations:
+      autoscaling.knative.dev/minScale: "1"
+  spec:
+   containers:
+    - image: gcr.io/knative-samples/helloworld-go:latest
+      env:
+        - name: TARGET
+          value: "tag-1.0"
