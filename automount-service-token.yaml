@@ -1,0 +1,14 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: automount-service-token
+ namespace: default
+spec:
+ template:
+  spec:
+   automountServiceAccountToken: false
+   containers:
+    - image: gcr.io/knative-samples/helloworld-go
+      env:
+        - name: TARGET
+          value: "automoutn service account token"

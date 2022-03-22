@@ -1,0 +1,16 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: progress-deadline
+ namespace: default
+spec:
+ template:
+   metadata:
+      annotations:
+        autoscaling.knative.dev/progressDeadline: "10s"
+   spec:
+     containers:
+      - image: gcr.io/knative-samples/helloworld-go
+        env:
+          - name: TARGET
+            value: "custom progress-deadline"

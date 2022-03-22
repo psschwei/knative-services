@@ -1,0 +1,17 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: run-as-group
+ namespace: default
+spec:
+ template:
+  spec:
+   containers:
+    - image: gcr.io/knative-samples/helloworld-go
+      env:
+        - name: TARGET
+          value: "running as group"
+      securityContext:
+        runAsGroup: 3000
+        runAsNonRoot: true
+        runAsUser: 1000

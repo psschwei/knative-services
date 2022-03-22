@@ -1,0 +1,25 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: http-readiness 
+ namespace: default
+spec:
+ template:
+  metadata:
+    annotations:
+      autoscaling.knative.dev/minScale: "1"
+  spec:
+   containers:
+   - name: liveness
+     image: k8s.gcr.io/liveness
+     args:
+     - /server
+     readinessProbe:
+       httpGet:
+         path: /healthz
+         port: 8080
+         httpHeaders:
+         - name: Custom-Header
+           value: Awesome
+       initialDelaySeconds: 3
+       periodSeconds: 3

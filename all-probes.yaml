@@ -1,0 +1,35 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: all-probes 
+ namespace: default
+spec:
+ template:
+  metadata:
+    annotations:
+      autoscaling.knative.dev/minScale: "1"
+  spec:
+   containers:
+    - image: gcr.io/knative-samples/helloworld-go
+      env:
+        - name: TARGET
+          value: "All Probes"
+      args:
+      - /bin/sh
+      - -c
+      - touch /tmp/healthy; sleep 30; rm -rf /tmp/healthy; sleep 600
+      readinessProbe:
+        exec:
+          command:
+          - ls
+          - /tmp
+        periodSeconds: 1
+        initialDelaySeconds: 2
+        failureThreshold: 40
+      livenessProbe:
+        exec:
+          command:
+          - cat
+          - /tmp/healthy
+        periodSeconds: 5
+        initialDelaySeconds: 5
