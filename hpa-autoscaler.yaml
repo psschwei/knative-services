@@ -1,0 +1,17 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: hpa
+ namespace: default
+spec:
+ template:
+  metadata:
+    annotations:
+      autoscaling.knative.dev/minScale: "5"
+      autoscaling.knative.dev/class: hpa.autoscaling.knative.dev
+  spec:
+   containers:
+    - image: gcr.io/knative-samples/helloworld-go
+      env:
+        - name: TARGET
+          value: "minscale=1"
