@@ -1,0 +1,14 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: hello
+ namespace: default
+spec:
+ template:
+  spec:
+   containers:
+    - image: localhost:5001/helloworld-go
+      imagePullPolicy: Never
+      env:
+        - name: TARGET
+          value: "Go Sample v2"
