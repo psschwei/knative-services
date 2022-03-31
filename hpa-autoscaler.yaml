@@ -8,10 +8,11 @@ spec:
   metadata:
     annotations:
       autoscaling.knative.dev/minScale: "5"
+      #autoscaling.knative.dev/initialScale: "5"
       autoscaling.knative.dev/class: hpa.autoscaling.knative.dev
   spec:
    containers:
     - image: gcr.io/knative-samples/helloworld-go
       env:
         - name: TARGET
-          value: "minscale=1"
+          value: "hpa"
