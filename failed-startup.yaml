@@ -1,0 +1,13 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: fails
+ namespace: default
+spec:
+ template:
+   metadata:
+      annotations:
+        serving.knative.dev/progress-deadline: "10s"
+   spec:
+     containers:
+      - image: nicolaka/netshoot
