@@ -1,16 +1,19 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
- name: progress-deadline
+ name: hello
  namespace: default
 spec:
- template:
-   metadata:
+  template:
+    metadata:
       annotations:
         serving.knative.dev/progress-deadline: "10s"
-   spec:
-     containers:
+    spec:
+      containers:
       - image: gcr.io/knative-samples/helloworld-go
         env:
           - name: TARGET
-            value: "custom progress-deadline"
+            value: "Go Sample v2"
+        resources:
+          requests: 
+            cpu: "500m"
