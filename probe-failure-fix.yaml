@@ -1,0 +1,19 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: healthprobes-go
+spec:
+  template:
+    spec:
+      containers:
+        - image: shashankft/healthprobes@sha256:cc1cb4323e4d1cdee62e3ae7623ff6a213db72e89c17ad4772c39fe841b98fb9
+          env:
+            - name: TARGET
+              value: "Go Sample v1"
+          livenessProbe:
+            httpGet:
+              path: /healthz/liveness
+              port: 0
+            periodSeconds: 15
+            failureThreshould: 1
+
