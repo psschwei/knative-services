@@ -1,0 +1,18 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: hello
+ namespace: default
+spec:
+ template:
+  metadata:
+    annotations:
+      serving.knative.dev/progress-deadline: "10s"
+      autoscaling.knative.dev/min-scale: "1"
+      networking.knative.dev/visibility: cluster-local
+  spec:
+   containers:
+    - image: gcr.io/knative-samples/helloworld-go
+      env:
+        - name: TARGET
+          value: "Go Sample v2"
