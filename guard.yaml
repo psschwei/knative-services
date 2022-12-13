@@ -1,0 +1,17 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: guard
+spec:
+  template:
+    metadata:
+        annotations:
+          features.knative.dev/queueproxy-podinfo: enabled
+          qpoption.knative.dev/guard-activate: enable
+    spec:
+      containers:
+        - image: gcr.io/knative-samples/helloworld-go
+          env:
+            - name: TARGET
+              value: "Secured World"
+

@@ -1,0 +1,18 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: hello-probe
+spec:
+  template:
+    spec:
+      containers:
+        - image: ko://knative.dev/serving/test/test_images/readiness
+          env:
+            - name: TARGET
+              value: "Probe"
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            periodSeconds: 5
+

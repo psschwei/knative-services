@@ -1,0 +1,21 @@
+apiVersion: serving.knative.dev/v1
+kind: Route
+metadata:
+  name: hello-local
+  namespace: default
+  ownerReferences:
+  - apiVersion: serving.knative.dev/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Service
+    name: hello
+    uid: 84855044-0f71-4ac5-9c7e-fcbfd849a064
+  labels:
+    #serving.knative.dev/service: hello
+    networking.knative.dev/visibility: cluster-local
+spec:
+  traffic:
+  - configurationName: hello
+    latestRevision: true
+    percent: 100
+

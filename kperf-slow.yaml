@@ -1,0 +1,22 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: kperf-slow
+ namespace: default
+spec:
+ template:
+  spec:
+   containers:
+    - image: gcr.io/knative-samples/helloworld-go
+      env:
+        - name: TARGET
+          value: "Kperf Slow"
+      readinessProbe:
+        exec:
+          command:
+          - ls
+          - /tmp
+        periodSeconds: 1
+        initialDelaySeconds: 9
+
+

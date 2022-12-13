@@ -1,0 +1,21 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: hello
+# namespace: default
+spec:
+ template:
+  spec:
+   containers:
+    - image: gcr.io/knative-samples/helloworld-go
+      env:
+        - name: TARGET
+          value: "Go Sample v4444"
+      volumeMounts:
+      - name: foo
+        mountPath: "/etc/foo"
+        readOnly: true
+   volumes:
+   - name: foo
+     configMap: 
+      name: game-demo

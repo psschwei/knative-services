@@ -1,0 +1,16 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: local
+ labels:
+   networking.knative.dev/visibility: cluster-local
+spec:
+ template:
+  spec:
+   containers:
+    - image: gcr.io/knative-samples/helloworld-go
+      ports:
+      - containerPort: 8443
+      env:
+        - name: TARGET
+          value: "Go Sample v2"

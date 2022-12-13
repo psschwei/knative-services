@@ -1,0 +1,30 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: restrict
+spec:
+  template:
+    metadata:
+      labels:
+        app: helloworld-go
+      annotations:
+        autoscaling.knative.dev/minScale: "1"
+        autoscaling.knative.dev/target: "1"
+    spec:
+      securityContext:
+        privileged: true
+      containers:
+      - image: docker.io/skonto/helloworld-go:user
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "200m"
+        env:
+        - name: TARGET
+          value: "Go Sample v1"
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          capabilities:
+            drop:
+            - ALL
